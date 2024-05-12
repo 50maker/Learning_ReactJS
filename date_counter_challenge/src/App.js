@@ -16,17 +16,43 @@ function Counter() {
   const date = new Date();
   date.setDate(date.getDate() + isCount);
 
+  function handleStep(id) {
+    setIsStep(id);
+  }
+
+  function handleCount(id) {
+    setIsCount(id);
+  }
+
+  function handleReset() {
+    setIsStep(1);
+    setIsCount(0);
+  }
+
   return (
     <div>
       <div>
-        <button onClick={() => setIsStep((c) => isStep - 1)}>-</button>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={isStep}
+          onChange={(e) => handleStep(Number(e.target.value))}
+        />
         <span>Step: {isStep}</span>
-        <button onClick={() => setIsStep((c) => isStep + 1)}>+</button>
+        {/* <button onClick={() => setIsStep((c) => isStep - 1)}>-</button>
+        <span>Step: {isStep}</span>
+        <button onClick={() => setIsStep((c) => isStep + 1)}>+</button> */}
       </div>
 
       <div>
         <button onClick={() => setIsCount((c) => isCount - isStep)}>-</button>
-        <span>Count: {isCount}</span>
+        <input
+          type="text"
+          value={isCount}
+          onChange={(e) => handleCount(Number(e.target.value))}
+        />
+        {/* <span>Count: {isCount}</span> */}
         <button onClick={() => setIsCount((c) => isCount + isStep)}>+</button>
       </div>
 
@@ -40,6 +66,9 @@ function Counter() {
         </span>
         <span>{date.toDateString()}</span>
       </p>
+      {isCount !== 0 || isStep !== 1 ? (
+        <button onClick={() => handleReset()}>Reset</button>
+      ) : null}
     </div>
   );
 }
